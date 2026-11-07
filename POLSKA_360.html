@@ -1,0 +1,1676 @@
+``` html
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLSKA 360° | National Digital Atlas</title>
+
+<style>
+:root {
+--bg:#080d19;
+--panel:#111b2d;
+--panel2:#17243a;
+--text:#f2f5ff;
+--muted:#a0aec5;
+--red:#e9475d;
+--gold:#e7bb72;
+--border:#293851;
+}
+
+body.light {
+--bg:#eef2f8;
+--panel:#ffffff;
+--panel2:#e2e9f3;
+--text:#17243a;
+--muted:#56647b;
+--border:#cbd5e3;
+}
+
+* {
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body {
+background:var(--bg);
+color:var(--text);
+font-family:Arial,Helvetica,sans-serif;
+transition:.3s;
+}
+
+button,input {
+font:inherit;
+}
+
+button {
+cursor:pointer;
+}
+
+a {
+color:inherit;
+text-decoration:none;
+}
+
+header {
+height:75px;
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:1000;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 35px;
+background:rgba(8,13,25,.94);
+backdrop-filter:blur(15px);
+border-bottom:1px solid var(--border);
+}
+
+.logo {
+font-size:23px;
+font-weight:900;
+letter-spacing:2px;
+}
+
+.logo span {
+color:var(--red);
+}
+
+.header-right {
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.clock {
+font-size:12px;
+color:#aab5ca;
+}
+
+.icon-btn {
+background:var(--panel2);
+color:var(--text);
+border:1px solid var(--border);
+padding:10px 14px;
+border-radius:8px;
+}
+
+.sidebar {
+position:fixed;
+top:75px;
+left:0;
+bottom:0;
+width:245px;
+background:var(--panel);
+border-right:1px solid var(--border);
+padding:25px 15px;
+overflow-y:auto;
+z-index:900;
+}
+
+.sidebar-title {
+font-size:10px;
+color:var(--muted);
+letter-spacing:2px;
+margin:20px 12px 10px;
+}
+
+.nav {
+display:block;
+padding:13px;
+border-radius:8px;
+color:var(--muted);
+font-size:13px;
+margin-bottom:5px;
+transition:.2s;
+}
+
+.nav:hover,.nav.active {
+background:var(--panel2);
+color:var(--text);
+border-left:3px solid var(--red);
+}
+
+.main {
+margin-left:245px;
+padding-top:75px;
+}
+
+.hero {
+min-height:630px;
+padding:100px 8%;
+display:flex;
+align-items:center;
+position:relative;
+overflow:hidden;
+background:
+linear-gradient(90deg,rgba(5,10,21,.98),rgba(5,10,21,.55)),
+url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=85");
+background-size:cover;
+background-position:center;
+}
+
+.hero:after {
+content:"POLSKA";
+position:absolute;
+right:-20px;
+bottom:-70px;
+font-size:180px;
+font-weight:900;
+color:rgba(255,255,255,.035);
+pointer-events:none;
+}
+
+.hero-content {
+max-width:780px;
+position:relative;
+z-index:2;
+}
+
+.eyebrow {
+color:var(--gold);
+font-size:12px;
+letter-spacing:4px;
+margin-bottom:25px;
+}
+
+.hero h1 {
+font-size:clamp(45px,7vw,85px);
+line-height:1.02;
+font-weight:900;
+}
+
+.hero h1 span {
+color:var(--red);
+}
+
+.hero p {
+max-width:650px;
+line-height:1.9;
+color:#c5cfe0;
+margin-top:25px;
+font-size:16px;
+}
+
+.primary-btn {
+display:inline-block;
+padding:16px 25px;
+margin-top:30px;
+background:var(--red);
+border-radius:7px;
+font-weight:bold;
+font-size:12px;
+letter-spacing:1px;
+transition:.3s;
+border:0;
+color:white;
+}
+
+.primary-btn:hover {
+transform:translateY(-4px);
+box-shadow:0 10px 30px #e9475d55;
+}
+
+section {
+padding:85px 7%;
+scroll-margin-top:75px;
+}
+
+.section-label {
+font-size:11px;
+letter-spacing:3px;
+color:var(--red);
+margin-bottom:15px;
+}
+
+.section-title {
+font-size:35px;
+margin-bottom:17px;
+}
+
+.section-desc {
+color:var(--muted);
+line-height:1.9;
+max-width:800px;
+margin-bottom:35px;
+}
+
+.panel {
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:13px;
+padding:27px;
+}
+
+.grid {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:20px;
+}
+
+.card {
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:12px;
+overflow:hidden;
+transition:.3s;
+}
+
+.card:hover {
+transform:translateY(-7px);
+border-color:var(--red);
+}
+
+.card img {
+width:100%;
+height:175px;
+object-fit:cover;
+}
+
+.card-body {
+padding:22px;
+}
+
+.card h3 {
+font-size:19px;
+margin-bottom:12px;
+}
+
+.card p {
+font-size:13px;
+color:var(--muted);
+line-height:1.8;
+}
+
+.tag {
+display:inline-block;
+font-size:10px;
+color:var(--gold);
+border:1px solid #b18c50;
+padding:5px 9px;
+border-radius:20px;
+margin-bottom:12px;
+}
+
+.stats {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+margin-top:30px;
+}
+
+.stat {
+padding:25px;
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:10px;
+text-align:center;
+}
+
+.stat strong {
+display:block;
+font-size:34px;
+color:var(--red);
+margin-bottom:10px;
+}
+
+.stat span {
+font-size:12px;
+color:var(--muted);
+}
+
+.alt {
+background:var(--panel);
+}
+
+.article {
+padding:28px;
+background:var(--panel);
+border-left:3px solid var(--red);
+border-radius:7px;
+margin-bottom:17px;
+}
+
+.article h3 {
+margin-bottom:12px;
+}
+
+.article p {
+color:var(--muted);
+font-size:14px;
+line-height:1.9;
+}
+
+.timeline {
+border-left:2px solid var(--red);
+padding-left:30px;
+margin-left:10px;
+}
+
+.timeline-item {
+position:relative;
+margin-bottom:35px;
+}
+
+.timeline-item:before {
+content:"";
+position:absolute;
+left:-37px;
+top:3px;
+width:12px;
+height:12px;
+background:var(--red);
+border-radius:50%;
+box-shadow:0 0 15px var(--red);
+}
+
+.timeline-item h3 {
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.timeline-item p {
+color:var(--muted);
+line-height:1.8;
+font-size:14px;
+}
+
+.search-box {
+width:100%;
+max-width:550px;
+padding:15px;
+border:1px solid var(--border);
+background:var(--panel);
+color:var(--text);
+border-radius:8px;
+outline:none;
+margin-bottom:25px;
+}
+
+.search-box:focus {
+border-color:var(--red);
+}
+
+.voivodeships {
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+gap:10px;
+}
+
+.region {
+padding:17px;
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:8px;
+cursor:pointer;
+transition:.2s;
+}
+
+.region:hover {
+border-color:var(--red);
+background:var(--panel2);
+}
+
+.region strong {
+display:block;
+font-size:13px;
+margin-bottom:7px;
+}
+
+.region span {
+color:var(--muted);
+font-size:11px;
+}
+
+.info-box {
+background:var(--panel2);
+padding:25px;
+border-radius:10px;
+margin-top:20px;
+line-height:1.8;
+color:var(--muted);
+}
+
+.quiz {
+max-width:650px;
+background:var(--panel);
+padding:30px;
+border:1px solid var(--border);
+border-radius:12px;
+}
+
+.quiz h3 {
+margin-bottom:20px;
+}
+
+.quiz-option {
+width:100%;
+padding:15px;
+margin-top:10px;
+border-radius:7px;
+border:1px solid var(--border);
+background:var(--panel2);
+color:var(--text);
+text-align:left;
+}
+
+.quiz-option:hover {
+border-color:var(--red);
+}
+
+.quiz-option:disabled {
+cursor:default;
+opacity:1;
+}
+
+#quizResult {
+margin-top:20px;
+line-height:1.8;
+}
+
+.progress {
+height:7px;
+background:var(--panel2);
+border-radius:20px;
+margin:20px 0;
+overflow:hidden;
+}
+
+.progress div {
+height:100%;
+width:0;
+background:var(--red);
+transition:.3s;
+}
+
+.modal {
+position:fixed;
+inset:0;
+background:#000b;
+z-index:2000;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.modal-box {
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:15px;
+padding:30px;
+width:100%;
+max-width:550px;
+position:relative;
+}
+
+.modal-box h2 {
+margin-bottom:15px;
+}
+
+.modal-box p {
+color:var(--muted);
+line-height:1.8;
+}
+
+.close {
+position:absolute;
+right:20px;
+top:15px;
+font-size:25px;
+background:none;
+border:0;
+color:var(--text);
+}
+
+footer {
+background:#050811;
+padding:55px 25px;
+text-align:center;
+color:#8490a5;
+line-height:2;
+}
+
+footer strong {
+color:white;
+font-size:25px;
+}
+
+.reveal {
+opacity:0;
+transform:translateY(25px);
+transition:.7s;
+}
+
+.reveal.show {
+opacity:1;
+transform:translateY(0);
+}
+
+#topButton {
+position:fixed;
+right:25px;
+bottom:25px;
+width:45px;
+height:45px;
+border-radius:50%;
+background:var(--red);
+color:white;
+border:0;
+font-size:20px;
+display:none;
+z-index:500;
+}
+
+@media(max-width:950px) {
+.sidebar {
+width:65px;
+padding:15px 5px;
+}
+
+.sidebar-title {
+display:none;
+}
+
+.nav {
+font-size:0;
+text-align:center;
+padding:15px 3px;
+}
+
+.nav::first-letter {
+font-size:19px;
+}
+
+.main {
+margin-left:65px;
+}
+}
+
+@media(max-width:650px) {
+header {
+padding:0 12px;
+}
+
+.logo {
+font-size:17px;
+}
+
+.clock {
+display:none;
+}
+
+.hero {
+min-height:550px;
+padding:60px 7%;
+}
+
+.hero h1 {
+font-size:47px;
+}
+
+section {
+padding:65px 6%;
+}
+
+.section-title {
+font-size:28px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">POLSKA<span>360°</span></div>
+
+<div class="header-right">
+<div class="clock" id="clock"></div>
+<button class="icon-btn" onclick="toggleTheme()">◐ MOTYW</button>
+</div>
+</header>
+
+<aside class="sidebar">
+
+<div class="sidebar-title">NAWIGACJA GŁÓWNA</div>
+
+<a class="nav active" href="#home">🏛️ START</a>
+<a class="nav" href="#about">🇵🇱 O POLSCE</a>
+<a class="nav" href="#history">📜 HISTORIA</a>
+<a class="nav" href="#geography">🗺️ GEOGRAFIA</a>
+<a class="nav" href="#regions">🏙️ WOJEWÓDZTWA</a>
+<a class="nav" href="#nature">🌲 PRZYRODA</a>
+
+<div class="sidebar-title">DZIEDZICTWO</div>
+
+<a class="nav" href="#battles">⚔️ BITWY</a>
+<a class="nav" href="#science">🔬 NAUKA</a>
+<a class="nav" href="#culture">🎭 KULTURA</a>
+<a class="nav" href="#symbols">🦅 SYMBOLE</a>
+
+<div class="sidebar-title">CENTRUM WIEDZY</div>
+
+<a class="nav" href="#statistics">📊 STATYSTYKI</a>
+<a class="nav" href="#encyclopedia">📚 ENCYKLOPEDIA</a>
+<a class="nav" href="#quiz">🧠 QUIZ</a>
+
+</aside>
+
+<main class="main">
+
+<!-- HOME -->
+
+<div class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="eyebrow">NATIONAL DIGITAL ATLAS / POLAND</div>
+
+<h1>JEDEN KRAJ.<br><span>TYSIĄCE HISTORII.</span></h1>
+
+<p>
+Polska to ponad tysiąc lat historii, niezwykłe
+krajobrazy, naukowe odkrycia, wielowiekowe tradycje
+i miliony ludzkich historii.
+
+Odkryj kraj od Bałtyku aż po Karpaty.
+Poznaj jego przeszłość, teraźniejszość i dziedzictwo.
+</p>
+
+<a class="primary-btn" href="#about">ROZPOCZNIJ PODRÓŻ →</a>
+
+</div>
+</div>
+
+<!-- ABOUT -->
+
+<section id="about" class="reveal">
+
+<div class="section-label">01 / INFORMACJE OGÓLNE</div>
+
+<h2 class="section-title">Rzeczpospolita Polska</h2>
+
+<p class="section-desc">
+Polska jest państwem położonym w Europie Środkowej.
+Graniczy z siedmioma państwami, ma dostęp do Morza
+Bałtyckiego i posiada niezwykle zróżnicowane
+środowisko geograficzne.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-body">
+<span class="tag">PAŃSTWO</span>
+<h3>Ustrój</h3>
+<p>Polska jest republiką o ustroju demokratycznym. Obowiązuje system parlamentarno-gabinetowy.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<span class="tag">STOLICA</span>
+<h3>Warszawa</h3>
+<p>Największe miasto Polski i siedziba najważniejszych władz państwowych.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<span class="tag">JĘZYK</span>
+<h3>Polski</h3>
+<p>Język polski należy do zachodniej grupy języków słowiańskich.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<span class="tag">WALUTA</span>
+<h3>Złoty (PLN)</h3>
+<p>Oficjalną walutą Polski jest złoty, dzielący się na 100 groszy.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- HISTORY -->
+
+<section id="history" class="alt reveal">
+
+<div class="section-label">02 / HISTORIA</div>
+
+<h2 class="section-title">Ponad tysiąc lat historii</h2>
+
+<p class="section-desc">
+Najważniejsze wydarzenia, które ukształtowały
+państwo polskie.
+</p>
+
+<div class="timeline">
+
+<div class="timeline-item">
+<h3>966 – Chrzest Polski</h3>
+<p>
+Mieszko I przyjął chrzest. Wydarzenie to jest
+uznawane za symboliczny początek chrześcijaństwa
+i ważny etap kształtowania polskiej państwowości.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1025 – Koronacja Bolesława Chrobrego</h3>
+<p>
+Bolesław Chrobry został pierwszym koronowanym
+królem Polski.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1364 – Powstanie Akademii Krakowskiej</h3>
+<p>
+Kazimierz Wielki założył uczelnię, która
+stała się jednym z najważniejszych ośrodków
+naukowych w tej części Europy.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1410 – Bitwa pod Grunwaldem</h3>
+<p>
+Wojska polsko-litewskie pokonały zakon krzyżacki
+w jednej z największych bitew średniowiecznej Europy.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1569 – Unia Lubelska</h3>
+<p>
+Powstała Rzeczpospolita Obojga Narodów,
+łącząca Koronę Królestwa Polskiego i Wielkie
+Księstwo Litewskie.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1791 – Konstytucja 3 maja</h3>
+<p>
+Uchwalono konstytucję regulującą ustrój
+Rzeczypospolitej. Była pierwszą w Europie
+i drugą na świecie nowoczesną konstytucją.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1795 – Trzeci rozbiór Polski</h3>
+<p>
+Polska utraciła niepodległość i zniknęła
+z mapy Europy na 123 lata.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1918 – Odzyskanie niepodległości</h3>
+<p>
+Po zakończeniu I wojny światowej Polska
+odzyskała niepodległość.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1939 – Początek II wojny światowej</h3>
+<p>
+1 września Niemcy zaatakowały Polskę.
+17 września nastąpiła agresja Związku Radzieckiego.
+</p>
+</div>
+
+<div class="timeline-item">
+<h3>1989 – Przemiany polityczne</h3>
+<p>
+Rozpoczęły się przemiany demokratyczne,
+które zakończyły okres rządów komunistycznych.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- GEOGRAPHY -->
+
+<section id="geography" class="reveal">
+
+<div class="section-label">03 / GEOGRAFIA</div>
+
+<h2 class="section-title">Geograficzne oblicze Polski</h2>
+
+<p class="section-desc">
+Polska leży w Europie Środkowej.
+Jej krajobraz obejmuje wybrzeże, pojezierza,
+niziny, wyżyny, kotliny i góry.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700">
+<div class="card-body">
+<h3>Karpaty</h3>
+<p>Łańcuch górski na południu Polski. Znajdują się tu Tatry i Beskidy.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=700">
+<div class="card-body">
+<h3>Sudety</h3>
+<p>Góry w południowo-zachodniej Polsce. Ich najwyższym szczytem są Śnieżka i okolice Karkonoszy.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=700">
+<div class="card-body">
+<h3>Pojezierza</h3>
+<p>Regiony z licznymi jeziorami, ukształtowanymi w dużej mierze przez działalność lodowca.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700">
+<div class="card-body">
+<h3>Wybrzeże Bałtyku</h3>
+<p>Północna część Polski z plażami, wydmami, klifami i portami morskimi.</p>
+</div>
+</div>
+
+</div>
+
+<div class="panel" style="margin-top:25px">
+<h3>Najważniejsze rzeki</h3>
+<p style="color:var(--muted);line-height:2;margin-top:15px">
+Wisła – najdłuższa rzeka Polski.<br>
+Odra – druga pod względem długości rzeka Polski.<br>
+Warta – ważna rzeka dorzecza Odry.<br>
+Bug – rzeka przepływająca częściowo wzdłuż wschodniej granicy.
+</p>
+</div>
+
+</section>
+
+<!-- REGIONS -->
+
+<section id="regions" class="alt reveal">
+
+<div class="section-label">04 / PODZIAŁ ADMINISTRACYJNY</div>
+
+<h2 class="section-title">16 województw Polski</h2>
+
+<p class="section-desc">
+Kliknij wybrane województwo, aby poznać jego stolicę
+administracyjną i charakterystyczne miejsca.
+</p>
+
+<div class="voivodeships" id="regionsList"></div>
+
+<div class="info-box" id="regionInfo">
+Wybierz województwo z listy powyżej.
+</div>
+
+</section>
+
+<!-- NATURE -->
+
+<section id="nature" class="reveal">
+
+<div class="section-label">05 / ŚRODOWISKO NATURALNE</div>
+
+<h2 class="section-title">Dzika Polska</h2>
+
+<p class="section-desc">
+Polska posiada wiele parków narodowych,
+rezerwatów przyrody i obszarów chronionych.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1511497584788-876760111969?w=700">
+<div class="card-body">
+<h3>Puszcza Białowieska</h3>
+<p>Jeden z najlepiej zachowanych lasów naturalnych nizinnej Europy. Słynie z populacji żubrów.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?w=700">
+<div class="card-body">
+<h3>Żubr europejski</h3>
+<p>Największy współcześnie żyjący dziki ssak lądowy Europy.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=700">
+<div class="card-body">
+<h3>Lis rudy</h3>
+<p>Pospolity drapieżnik występujący w lasach, na łąkach i terenach rolniczych.</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=700">
+<div class="card-body">
+<h3>Parki narodowe</h3>
+<p>W Polsce znajduje się 23 parków narodowych chroniących wyjątkowe ekosystemy.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- BATTLES -->
+
+<section id="battles" class="alt reveal">
+
+<div class="section-label">06 / HISTORIA MILITARNA</div>
+
+<h2 class="section-title">Wydarzenia i bitwy</h2>
+
+<div class="article">
+<h3>Bitwa pod Grunwaldem – 1410</h3>
+<p>Jedno z najważniejszych zwycięstw wojsk polsko-litewskich nad zakonem krzyżackim.</p>
+</div>
+
+<div class="article">
+<h3>Odsiecz wiedeńska – 1683</h3>
+<p>Wojska sprzymierzone pod dowództwem Jana III Sobieskiego uczestniczyły w zwycięskiej bitwie pod Wiedniem.</p>
+</div>
+
+<div class="article">
+<h3>Powstanie listopadowe – 1830–1831</h3>
+<p>Zryw niepodległościowy przeciwko panowaniu rosyjskiemu w Królestwie Polskim.</p>
+</div>
+
+<div class="article">
+<h3>Powstanie styczniowe – 1863–1864</h3>
+<p>Największe polskie powstanie narodowe w XIX wieku.</p>
+</div>
+
+<div class="article">
+<h3>Powstanie warszawskie – 1944</h3>
+<p>Walka mieszkańców Warszawy i Armii Krajowej przeciwko niemieckiej okupacji.</p>
+</div>
+
+</section>
+
+<!-- SCIENCE -->
+
+<section id="science" class="reveal">
+
+<div class="section-label">07 / NAUKA I TECHNOLOGIA</div>
+
+<h2 class="section-title">Polacy, którzy zmieniali świat</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-body">
+<span class="tag">FIZYKA / CHEMIA</span>
+<h3>Maria Skłodowska-Curie</h3>
+<p>Badaczka promieniotwórczości. Jako pierwsza kobieta otrzymała Nagrodę Nobla. Była pierwszą osobą uhonorowaną Noblem w dwóch różnych dziedzinach naukowych.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<span class="tag">ASTRONOMIA</span>
+<h3>Mikołaj Kopernik</h3>
+<p>Autor dzieła „O obrotach sfer niebieskich”, w którym przedstawił teorię heliocentryczną.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<span class="tag">MATEMATYKA</span>
+<h3>Stefan Banach</h3>
+<p>Jeden z najważniejszych matematyków XX wieku, współtwórca analizy funkcjonalnej.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<span class="tag">CHEMIA / PRZEMYSŁ</span>
+<h3>Ignacy Łukasiewicz</h3>
+<p>Farmaceuta i pionier przemysłu naftowego, związany z rozwojem lampy naftowej.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- CULTURE -->
+
+<section id="culture" class="alt reveal">
+
+<div class="section-label">08 / DZIEDZICTWO KULTUROWE</div>
+
+<h2 class="section-title">Polska kultura</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-body">
+<h3>📚 Literatura</h3>
+<p>Adam Mickiewicz, Juliusz Słowacki, Henryk Sienkiewicz, Wisława Szymborska i wielu innych twórców.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3>🎹 Muzyka</h3>
+<p>Fryderyk Chopin, Stanisław Moniuszko i bogata tradycja polskiej muzyki klasycznej.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3>🎨 Sztuka</h3>
+<p>Jan Matejko, Stanisław Wyspiański i polska szkoła plakatu.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3>🍲 Kuchnia</h3>
+<p>Pierogi, bigos, żurek, barszcz czerwony i regionalne potrawy.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- SYMBOLS -->
+
+<section id="symbols" class="reveal">
+
+<div class="section-label">09 / SYMBOLE NARODOWE</div>
+
+<h2 class="section-title">Znaki polskiej tożsamości</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="card-body">
+<h3>🇵🇱 Flaga</h3>
+<p>Składa się z dwóch poziomych pasów: białego u góry i czerwonego u dołu.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3>🦅 Godło</h3>
+<p>Przedstawia białego orła w złotej koronie, na czerwonym polu tarczy.</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-body">
+<h3>🎵 Hymn</h3>
+<p>Mazurka Dąbrowskiego, którego słowa napisał Józef Wybicki.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- STATISTICS -->
+
+<section id="statistics" class="alt reveal">
+
+<div class="section-label">10 / DANE STATYSTYCZNE</div>
+
+<h2 class="section-title">Polska w liczbach</h2>
+
+<p class="section-desc">
+Wybrane podstawowe dane geograficzne i administracyjne.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<strong>312 696</strong>
+<span>km² powierzchni</span>
+</div>
+
+<div class="stat">
+<strong>16</strong>
+<span>województw</span>
+</div>
+
+<div class="stat">
+<strong>23</strong>
+<span>parki narodowe</span>
+</div>
+
+<div class="stat">
+<strong>2499</strong>
+<span>m n.p.m. – Rysy</span>
+</div>
+
+<div class="stat">
+<strong>1025</strong>
+<span>koronacja pierwszego króla</span>
+</div>
+
+<div class="stat">
+<strong>966</strong>
+<span>symboliczna data chrztu Polski</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- ENCYCLOPEDIA -->
+
+<section id="encyclopedia" class="reveal">
+
+<div class="section-label">11 / CENTRUM INFORMACJI</div>
+
+<h2 class="section-title">Encyklopedia Polski</h2>
+
+<p class="section-desc">
+Wpisz słowo, aby wyszukać informacje w bazie artykułów.
+</p>
+
+<input
+class="search-box"
+id="searchInput"
+placeholder="🔍 Szukaj: Wisła, Warszawa, Kopernik..."
+oninput="searchArticles()">
+
+<div class="grid" id="articleList">
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Wisła</h3>
+<p>Najdłuższa rzeka Polski, uchodząca do Morza Bałtyckiego.</p>
+</div>
+</div>
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Warszawa</h3>
+<p>Stolica Polski, położona nad Wisłą.</p>
+</div>
+</div>
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Gniezno</h3>
+<p>Jeden z najważniejszych ośrodków wczesnego państwa polskiego.</p>
+</div>
+</div>
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Wawel</h3>
+<p>Wzgórze w Krakowie, historyczna siedziba polskich władców.</p>
+</div>
+</div>
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Bałtyk</h3>
+<p>Morze na północy Polski.</p>
+</div>
+</div>
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Rysy</h3>
+<p>Najwyższy punkt Polski, położony w Tatrach.</p>
+</div>
+</div>
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Chrzest Polski</h3>
+<p>Wydarzenie z 966 roku związane z Mieszkiem I.</p>
+</div>
+</div>
+
+<div class="card searchable">
+<div class="card-body">
+<h3>Konstytucja 3 maja</h3>
+<p>Ustawa zasadnicza uchwalona w 1791 roku.</p>
+</div>
+</div>
+
+</div>
+
+<p id="noResults" style="display:none;color:var(--muted);margin-top:20px">
+Nie znaleziono pasujących artykułów.
+</p>
+
+</section>
+
+<!-- QUIZ -->
+
+<section id="quiz" class="alt reveal">
+
+<div class="section-label">12 / AKADEMIA WIEDZY</div>
+
+<h2 class="section-title">Sprawdź swoją wiedzę</h2>
+
+<p class="section-desc">
+12 pytań dotyczących historii, geografii i kultury Polski.
+</p>
+
+<div class="quiz">
+
+<div id="quizProgress">PYTANIE 1 / 12</div>
+
+<div class="progress">
+<div id="progressBar"></div>
+</div>
+
+<h3 id="question">W którym roku Polska przyjęła chrzest?</h3>
+
+<div id="options"></div>
+
+<p id="quizResult"></p>
+
+<p id="score" style="margin-top:15px;color:var(--gold)">
+Wynik: 0 punktów
+</p>
+
+<button class="primary-btn" id="nextBtn" onclick="nextQuestion()" style="display:none">
+NASTĘPNE PYTANIE →
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+<strong>POLSKA 360°</strong>
+<p>NATIONAL DIGITAL ATLAS</p>
+<p>Historia • Geografia • Nauka • Kultura • Przyroda</p>
+<p>Projekt edukacyjny | 2026</p>
+<p>Materiał edukacyjny. Dane i opisy mają charakter informacyjny.</p>
+</footer>
+
+<div class="modal" id="modal" onclick="closeModal(event)">
+<div class="modal-box">
+<button class="close" onclick="closeModal()">×</button>
+<h2 id="modalTitle"></h2>
+<p id="modalText"></p>
+</div>
+</div>
+
+<button id="topButton" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+
+// ZEGAR
+
+function updateClock() {
+let d=new Date();
+
+document.getElementById("clock").textContent=
+d.toLocaleDateString("pl-PL")+" | "+
+d.toLocaleTimeString("pl-PL");
+}
+
+updateClock();
+setInterval(updateClock,1000);
+
+
+// MOTYW
+
+function toggleTheme() {
+document.body.classList.toggle("light");
+
+localStorage.setItem(
+"polskaTheme",
+document.body.classList.contains("light")?"light":"dark"
+);
+}
+
+if(localStorage.getItem("polskaTheme")==="light") {
+document.body.classList.add("light");
+}
+
+
+// ANIMACJE PRZEWIJANIA
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting) {
+entry.target.classList.add("show");
+}
+});
+},{threshold:.08});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+observer.observe(el);
+});
+
+
+// PRZYCISK GÓRA
+
+window.addEventListener("scroll",()=>{
+document.getElementById("topButton").style.display=
+window.scrollY>400?"block":"none";
+});
+
+
+// WOJEWÓDZTWA
+
+const regions=[
+["Dolnośląskie","Wrocław","Sudety, Karkonosze, Wrocław."],
+["Kujawsko-pomorskie","Bydgoszcz i Toruń","Toruńska starówka, Bydgoszcz i Wisła."],
+["Lubelskie","Lublin","Roztocze, Kazimierz Dolny, Lublin."],
+["Lubuskie","Gorzów Wielkopolski i Zielona Góra","Rozległe lasy, jeziora i winnice."],
+["Łódzkie","Łódź","Łódź, przemysłowa historia regionu."],
+["Małopolskie","Kraków","Tatry, Pieniny, Kraków i Wieliczka."],
+["Mazowieckie","Warszawa","Stolica państwa i dolina Wisły."],
+["Opolskie","Opole","Góra Świętej Anny i Opole."],
+["Podkarpackie","Rzeszów","Bieszczady, Beskidy i dolina Sanu."],
+["Podlaskie","Białystok","Puszcza Białowieska i Biebrza."],
+["Pomorskie","Gdańsk","Bałtyk, Trójmiasto i Kaszuby."],
+["Śląskie","Katowice","Wyżyna Śląska i dziedzictwo przemysłowe."],
+["Świętokrzyskie","Kielce","Góry Świętokrzyskie i gołoborza."],
+["Warmińsko-mazurskie","Olsztyn","Kraina Wielkich Jezior Mazurskich."],
+["Wielkopolskie","Poznań","Gniezno i początki państwa polskiego."],
+["Zachodniopomorskie","Szczecin","Wybrzeże Bałtyku i Zalew Szczeciński."]
+];
+
+const regionsList=document.getElementById("regionsList");
+
+regions.forEach((r,i)=>{
+let div=document.createElement("div");
+div.className="region";
+
+let strong=document.createElement("strong");
+strong.textContent=(i+1)+". "+r[0];
+
+let span=document.createElement("span");
+span.textContent=r[1];
+
+div.append(strong,span);
+
+div.onclick=()=>{
+
+document.getElementById("regionInfo").textContent=
+r[0]+". Siedziby władz wojewódzkich: "+r[1]+". Charakterystyka: "+r[2];
+
+};
+
+regionsList.appendChild(div);
+});
+
+
+// WYSZUKIWARKA
+
+function searchArticles() {
+
+let value=document.getElementById("searchInput").value.toLowerCase();
+
+let cards=document.querySelectorAll(".searchable");
+let visible=0;
+
+cards.forEach(card=>{
+
+let match=card.textContent.toLowerCase().includes(value);
+
+card.style.display=match?"":"none";
+
+if(match)visible++;
+
+});
+
+document.getElementById("noResults").style.display=
+visible===0?"block":"none";
+
+}
+
+
+// QUIZ
+
+const questions=[
+
+{
+q:"W którym roku Polska przyjęła chrzest?",
+a:["966","1025","1410","1569"],
+c:0
+},
+
+{
+q:"Jaka jest stolica Polski?",
+a:["Kraków","Warszawa","Poznań","Gdańsk"],
+c:1
+},
+
+{
+q:"Która rzeka jest najdłuższa w Polsce?",
+a:["Odra","Warta","Wisła","Bug"],
+c:2
+},
+
+{
+q:"Ile województw ma Polska?",
+a:["12","14","16","18"],
+c:2
+},
+
+{
+q:"Kto był pierwszym koronowanym królem Polski?",
+a:["Mieszko I","Bolesław Chrobry","Kazimierz Wielki","Władysław Jagiełło"],
+c:1
+},
+
+{
+q:"W którym roku uchwalono Konstytucję 3 maja?",
+a:["1791","1795","1918","1989"],
+c:0
+},
+
+{
+q:"Jaki jest najwyższy szczyt Polski?",
+a:["Giewont","Śnieżka","Rysy","Kasprowy Wierch"],
+c:2
+},
+
+{
+q:"Kto napisał słowa Mazurka Dąbrowskiego?",
+a:["Adam Mickiewicz","Józef Wybicki","Juliusz Słowacki","Fryderyk Chopin"],
+c:1
+},
+
+{
+q:"Z jakim morzem graniczy Polska?",
+a:["Czarnym","Śródziemnym","Bałtyckim","Północnym"],
+c:2
+},
+
+{
+q:"W którym roku Polska odzyskała niepodległość?",
+a:["1795","1918","1939","1945"],
+c:1
+},
+
+{
+q:"W jakim mieście znajduje się Wawel?",
+a:["Warszawa","Gniezno","Kraków","Toruń"],
+c:2
+},
+
+{
+q:"Ile parków narodowych znajduje się w Polsce?",
+a:["16","20","23","30"],
+c:2
+}
+
+];
+
+let current=0;
+let points=0;
+let answered=false;
+
+function loadQuestion() {
+
+let q=questions[current];
+
+document.getElementById("quizProgress").textContent=
+"PYTANIE "+(current+1)+" / "+questions.length;
+
+document.getElementById("progressBar").style.width=
+(current/questions.length*100)+"%";
+
+document.getElementById("question").textContent=q.q;
+
+document.getElementById("quizResult").textContent="";
+
+document.getElementById("nextBtn").style.display="none";
+
+let box=document.getElementById("options");
+box.innerHTML="";
+
+q.a.forEach((answer,index)=>{
+
+let button=document.createElement("button");
+
+button.className="quiz-option";
+button.textContent=String.fromCharCode(65+index)+". "+answer;
+
+button.onclick=()=>checkAnswer(index,button);
+
+box.appendChild(button);
+
+});
+
+answered=false;
+
+}
+
+function checkAnswer(index,button) {
+
+if(answered)return;
+
+answered=true;
+
+let correct=questions[current].c;
+
+let buttons=document.querySelectorAll(".quiz-option");
+
+buttons.forEach((b,i)=>{
+b.disabled=true;
+
+if(i===correct) {
+b.style.borderColor="#35c58a";
+}
+});
+
+if(index===correct) {
+
+points++;
+
+document.getElementById("quizResult").textContent=
+"✓ POPRAWNIE! Świetna odpowiedź.";
+
+} else {
+
+document.getElementById("quizResult").textContent=
+"✗ Niepoprawnie. Prawidłowa odpowiedź: "+
+questions[current].a[correct];
+
+button.style.borderColor="#e9475d";
+
+}
+
+document.getElementById("score").textContent=
+"Wynik: "+points+" / "+questions.length;
+
+document.getElementById("nextBtn").style.display="inline-block";
+
+}
+
+function nextQuestion() {
+
+current++;
+
+if(current>=questions.length) {
+
+document.getElementById("question").textContent=
+"KONIEC AKADEMII WIEDZY!";
+
+document.getElementById("options").innerHTML="";
+
+document.getElementById("quizProgress").textContent="UKOŃCZONO";
+
+document.getElementById("progressBar").style.width="100%";
+
+document.getElementById("quizResult").textContent=
+"Twój końcowy wynik: "+points+" / "+questions.length+
+". "+(points===questions.length?"Perfekcyjnie!":"Dziękujemy za udział!");
+
+document.getElementById("nextBtn").textContent="ZAGRAJ PONOWNIE";
+document.getElementById("nextBtn").onclick=restartQuiz;
+
+return;
+
+}
+
+loadQuestion();
+
+}
+
+function restartQuiz() {
+
+current=0;
+points=0;
+
+document.getElementById("score").textContent="Wynik: 0 / 12";
+
+document.getElementById("nextBtn").textContent="NASTĘPNE PYTANIE →";
+document.getElementById("nextBtn").onclick=nextQuestion;
+
+loadQuestion();
+
+}
+
+loadQuestion();
+
+
+// OKNO INFORMACYJNE
+
+function closeModal(event) {
+
+if(!event || event.target.id==="modal") {
+document.getElementById("modal").style.display="none";
+}
+
+}
+
+</script>
+
+</body>
+</html>
+```
